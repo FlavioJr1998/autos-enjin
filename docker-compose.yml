@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  apollo_notas:
+    build: .
+    container_name: apollo_notas
+    restart: unless-stopped
+
+    env_file:
+      - .env
+
+    volumes:
+      - ./logs:/app/logs
+
+    command: python -m app.main
