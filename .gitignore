@@ -1,3 +1,22 @@
+# ambiente
 .env
+
+# virtualenv
 venv/
+.env/
+ENV/
+
+# python
 __pycache__/
+*.pyc
+*.pyo
+
+# logs
+logs/
+
+# arquivos locais
+notas_enviadas.json
+
+# sistema
+.DS_Store
+Thumbs.db
