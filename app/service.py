@@ -1,6 +1,7 @@
 from app.database import get_connection
 from app.config import EMPRESA, AMBIENTE_DESCRICAO, DATA_INICIO_TESTE, DATA_FIM_TESTE
 from app.state import carregar_estado, salvar_estado
+from datetime import datetime, timedelta
 
 def buscar_notas():
     filtro = montar_filtro()
@@ -31,7 +32,6 @@ def buscar_notas():
     conn.close()
 
     return resultados
-
 
 def montar_filtro():
     if AMBIENTE_DESCRICAO == "TESTE":
@@ -127,3 +127,21 @@ def buscar_revendas(lista_revendas):
 def formatar_cnpj(cnpj):
     cnpj = str(cnpj).zfill(14)
     return f"{cnpj[:2]}.{cnpj[2:5]}.{cnpj[5:8]}/{cnpj[8:12]}-{cnpj[12:]}"
+
+def obter_periodo():
+    hoje = datetime.now()
+    dia_semana = hoje.weekday()  # segunda=0, sexta=4
+
+    if dia_semana == 0:  # segunda
+        inicio = hoje - timedelta(days=2)
+        fim = hoje
+
+    elif dia_semana == 4:  # sexta
+        inicio = hoje - timedelta(days=4)
+        fim = hoje
+
+    else:
+        inicio = hoje
+        fim = hoje
+
+    return inicio, fim

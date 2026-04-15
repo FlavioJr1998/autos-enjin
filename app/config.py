@@ -3,10 +3,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-EMPRESA = 1
+EMPRESA = 2
 # 1 = PRODUÇÃO
 # 2 = HOMOLOGAÇÃO
-AMBIENTE = 2
+AMBIENTE = 1
 AMBIENTE_DESCRICAO = ''
 
 if EMPRESA == 1:

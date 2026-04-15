@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
     rm -rf /var/lib/apt/lists/*
 
 # copiar instant client
-COPY instantclient /opt/oracle
+COPY instantclient/instantclient_19_30 /opt/oracle/instantclient_19_30
 
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_19_30/
 
