@@ -1,0 +1,14 @@
+DB_USER=
+DB_PASS=
+DB_DSN_HOMO=
+DB_DSN_PROD=
+TELEGRAM_TOKEN=SEU_TOKEN_AQUI
+TELEGRAM_CHAT_ID=SEU_CHAT_ID_AQUI
+SMTP_HOST=smtp.gmail.com    
+SMTP_PORT=587
+
+EMAIL_FROM=automacao@enjin.com.br
+EMAIL_TO=fjs73santosjunior@gmail.com
+
+EMAIL_USER=ti@enjin.com.br
+EMAIL_PASS=
