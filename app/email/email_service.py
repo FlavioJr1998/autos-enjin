@@ -1,13 +1,17 @@
-from app.config import EMPRESA_DESCRICAO
+import os
 
-def gerar_html(novas):
+def gerar_html(novas, data_inicio, data_fim):
     html = f"""
     <html>
     <body style="font-family: Arial, sans-serif;">
 
     <h2 style="color:#d9534f;">
-    🚨 Notas Fiscais Detectadas - {EMPRESA_DESCRICAO}
+    🚨 Notas Fiscais Detectadas - { "ENJIN" if os.getenv('EMPRESA') == '1' else "FORÇA PARANÁ MOTORES E MÁQUINAS" } - {os.getenv('AMBIENTE_DESCRICAO')}
     </h2>
+
+    <p style="font-size:14px;">
+📅 <b>Período da consulta:</b> {data_inicio} até {data_fim}
+    </p>
 
     <table border="1" cellpadding="8" cellspacing="0" 
            style="border-collapse: collapse; width:100%;">
@@ -46,7 +50,7 @@ def gerar_html(novas):
     </table>
     <br>
     <p style="font-size:12px;color:gray;">
-    Script Captação NFe Destinadas por Empresa<br>
+    Script Captação NFe Destinadas da base de dados do Apollo<br>
     Desenvolvido por Flávio Jr 🚀
     </p>
     </body>

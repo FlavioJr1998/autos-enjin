@@ -1,11 +1,10 @@
 import oracledb
 import os
-from app.config import DB_USER, DB_PASS, DB_DSN
+from app.config import DB_USER, DB_PASS, DB_DSN, ORACLE_CLIENT_LIB
 
 def get_connection():
-    oracledb.init_oracle_client(
-        lib_dir=r"C:\Users\TI\Documents\Projetos\instantclient-basic-windows.x64-19.29.0.0.0dbru\instantclient_19_29"
-    )
+    if os.name == "nt":
+        oracledb.init_oracle_client(lib_dir=ORACLE_CLIENT_LIB)
 
     return oracledb.connect(
         user=DB_USER,

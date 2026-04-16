@@ -1,8 +1,7 @@
 from app.service import buscar_notas, processar_notas
-from app.config import AMBIENTE_DESCRICAO
 from app.email.email_config import enviar_email
 from app.email.email_service import gerar_html
-import logging
+import logging, os
 
 def main():
     logging.basicConfig(
@@ -10,11 +9,13 @@ def main():
         level=logging.INFO,
         format='%(asctime)s - %(levelname)s - %(message)s'
     )
-    resultados = buscar_notas()
-    print(f"*** Executando em ambiente de {AMBIENTE_DESCRICAO} ******")
+    
+    resultados, data_inicio, data_fim = buscar_notas()
+    print(f"*** Executando em ambiente de {os.getenv('AMBIENTE_DESCRICAO')} ******")
     print("TOTAL DO BANCO:", resultados)  # 👈 DEBUG
     novas = processar_notas(resultados)
 
+    print ( novas )
 
     if not novas:
         print("💤 Nenhuma nota nova")
@@ -25,7 +26,7 @@ def main():
         print(n)
     
     print("Chamando envio de email...")
-    html = gerar_html(novas)
+    html = gerar_html(novas, data_inicio, data_fim)
     enviar_email(html)
     print("Fim do envio")
 

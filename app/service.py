@@ -1,10 +1,22 @@
 from app.database import get_connection
-from app.config import EMPRESA, AMBIENTE_DESCRICAO, DATA_INICIO_TESTE, DATA_FIM_TESTE
+from app.config import DATA_INICIO_TESTE, DATA_FIM_TESTE
 from app.state import carregar_estado, salvar_estado
 from datetime import datetime, timedelta
+import os
 
 def buscar_notas():
-    filtro = montar_filtro()
+    inicio, fim = obter_periodo()
+
+    data_inicio = inicio.strftime("%d/%m/%Y")
+    data_fim = fim.strftime("%d/%m/%Y")
+
+    filtro = f"""
+    AND DW.DT_EMISSAO BETWEEN 
+        TO_DATE('{data_inicio} 00:00:00', 'DD/MM/YYYY HH24:MI:SS')
+    AND TO_DATE('{data_fim} 23:59:59', 'DD/MM/YYYY HH24:MI:SS')
+    """
+    
+    #filtro += montar_filtro()
 
     query = f"""
     SELECT 
@@ -17,10 +29,12 @@ def buscar_notas():
     TO_CHAR(DW.DT_EMISSAO, 'DD/MM/YYYY HH24:MI'),
     DW.REVENDA
     FROM FAT_NFE_DOWNLOAD DW
-    WHERE DW.EMPRESA = {EMPRESA}
+    WHERE DW.EMPRESA = {os.getenv('EMPRESA')}
     {filtro}
     ORDER BY DW.DT_EMISSAO ASC
     """
+
+    print( query )
 
     conn = get_connection()
     cursor = conn.cursor()
@@ -31,17 +45,17 @@ def buscar_notas():
     cursor.close()
     conn.close()
 
-    return resultados
+    return resultados, data_inicio, data_fim
 
 def montar_filtro():
-    if AMBIENTE_DESCRICAO == "TESTE":
+    if os.getenv('AMBIENTE_DESCRICAO') == "TESTE":
         return f"""
         AND DW.DT_EMISSAO BETWEEN 
         TO_DATE('{DATA_INICIO_TESTE} 00:00:00', 'DD/MM/YYYY HH24:MI:SS')
         AND TO_DATE('{DATA_FIM_TESTE} 23:59:59', 'DD/MM/YYYY HH24:MI:SS')
         """
 
-    elif AMBIENTE_DESCRICAO == "PRODUCAO":
+    elif os.getenv('AMBIENTE_DESCRICAO') == "PRODUCAO":
         return "AND TRUNC(DW.DT_EMISSAO) = TRUNC(SYSDATE)"
 
     else:
@@ -84,7 +98,7 @@ def buscar_notas_lancadas(lista_notas):
     query = f"""
     SELECT TITULO
     FROM FIN_TITULO
-    WHERE EMPRESA = {EMPRESA}
+    WHERE EMPRESA = {os.getenv('EMPRESA')}
       AND TIPO = 'CP'
       AND TITULO IN ({notas_str})
     """
@@ -109,7 +123,7 @@ def buscar_revendas(lista_revendas):
     query = f"""
     SELECT REVENDA, NOME_FANTASIA
     FROM GER_REVENDA
-    WHERE EMPRESA = {EMPRESA}
+    WHERE EMPRESA = {os.getenv('EMPRESA')}
       AND REVENDA IN ({revendas_str})
     """
 
@@ -134,6 +148,10 @@ def obter_periodo():
 
     if dia_semana == 0:  # segunda
         inicio = hoje - timedelta(days=2)
+        fim = hoje
+
+    elif dia_semana == 2: # quarta
+        inicio = hoje - timedelta(days=5)
         fim = hoje
 
     elif dia_semana == 4:  # sexta
