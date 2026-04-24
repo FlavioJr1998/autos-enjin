@@ -1,6 +1,6 @@
 set EMPRESA=2
 set AMBIENTE=PRODUCAO
 
-venv\Scripts\python.exe run.py
+cd /d C:\Users\Administrator\Desktop\Projetos\autos-enjin
 
-pause
+venv\Scripts\python.exe run.py

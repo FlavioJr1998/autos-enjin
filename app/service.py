@@ -1,6 +1,4 @@
 from app.database import get_connection
-from app.config import DATA_INICIO_TESTE, DATA_FIM_TESTE
-from app.state import carregar_estado, salvar_estado
 from datetime import datetime, timedelta
 import os
 
