@@ -11,7 +11,7 @@ __pycache__/
 *.pyo
 
 # logs
-logs/
+logs/app.log
 
 # arquivos locais
 notas_enviadas.json

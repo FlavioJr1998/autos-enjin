@@ -1,6 +1,7 @@
 from app.service import buscar_notas, processar_notas
 from app.email.email_config import enviar_email
 from app.email.email_service import gerar_html
+from app.logs_iniciais import logs_iniciais
 import logging, os
 
 def main():
@@ -11,24 +12,31 @@ def main():
     )
     
     resultados, data_inicio, data_fim = buscar_notas()
-    print(f"*** Executando em ambiente de {os.getenv('AMBIENTE_DESCRICAO')} ******")
-    print("TOTAL DO BANCO:", resultados)  # 👈 DEBUG
+    logs_iniciais( resultados )
     novas = processar_notas(resultados)
-
-    print ( novas )
-
+    
     if not novas:
         print("💤 Nenhuma nota nova")
+        logging.info( "💤 Nenhuma nota nova")
         return
 
-    print(f"🚨 {len(novas)} novas notas!")
+    msg = f"🚨 {len(novas)} novas notas!"
+    print( msg )
+    logging.info( msg )
+
     for n in novas:
         print(n)
     
-    print("Chamando envio de email...")
+    msg = "Chamando envio de email..."
+    print( msg )
+    logging.info( msg )
+    
     html = gerar_html(novas, data_inicio, data_fim)
     enviar_email(html)
-    print("Fim do envio")
+
+    msg = "Fim do Envio"
+    print( msg )
+    logging.info( msg )
 
 if __name__ == "__main__":
     main()

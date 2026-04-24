@@ -34,8 +34,6 @@ def buscar_notas():
     ORDER BY DW.DT_EMISSAO ASC
     """
 
-    print( query )
-
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -46,20 +44,6 @@ def buscar_notas():
     conn.close()
 
     return resultados, data_inicio, data_fim
-
-def montar_filtro():
-    if os.getenv('AMBIENTE_DESCRICAO') == "TESTE":
-        return f"""
-        AND DW.DT_EMISSAO BETWEEN 
-        TO_DATE('{DATA_INICIO_TESTE} 00:00:00', 'DD/MM/YYYY HH24:MI:SS')
-        AND TO_DATE('{DATA_FIM_TESTE} 23:59:59', 'DD/MM/YYYY HH24:MI:SS')
-        """
-
-    elif os.getenv('AMBIENTE_DESCRICAO') == "PRODUCAO":
-        return "AND TRUNC(DW.DT_EMISSAO) = TRUNC(SYSDATE)"
-
-    else:
-        return "AND DW.DT_EMISSAO >= SYSDATE - 1"
 
 def processar_notas(resultados):
     lista_notas = [row[2] for row in resultados]
@@ -151,7 +135,7 @@ def obter_periodo():
         fim = hoje
 
     elif dia_semana == 2: # quarta
-        inicio = hoje - timedelta(days=5)
+        inicio = hoje - timedelta(days=2)
         fim = hoje
 
     elif dia_semana == 4:  # sexta
