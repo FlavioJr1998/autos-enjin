@@ -10,8 +10,11 @@ EMPRESA = int(os.getenv("EMPRESA", 2))
 DATA_INICIO_TESTE = "10/04/2026"
 DATA_FIM_TESTE = "12/04/2026"
 INTERVALO_HORAS = 6
-DB_USER = os.getenv("DB_USER")
-DB_PASS = os.getenv("DB_PASS")
+
+DB_USER_R = os.getenv("DB_USER_R")
+DB_PASS_R = os.getenv("DB_PASS_R")
+DB_USER_W = os.getenv("DB_USER_W")
+DB_PASS_W = os.getenv("DB_PASS_W")
 
 if os.getenv('AMBIENTE_DESCRICAO') == 'PRODUCAO':
     AMBIENTE_DESCRICAO = 'PRODUÇÃO'

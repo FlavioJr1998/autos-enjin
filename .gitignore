@@ -16,6 +16,9 @@ logs/app.log
 # arquivos locais
 notas_enviadas.json
 
+# ignore json credenciais Google
+app/api/conta_servico_google/credenciais.json
+
 # sistema
 .DS_Store
 Thumbs.db

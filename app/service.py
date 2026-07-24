@@ -32,7 +32,7 @@ def buscar_notas():
     ORDER BY DW.DT_EMISSAO ASC
     """
 
-    conn = get_connection()
+    conn = get_connection( 'read')
     cursor = conn.cursor()
 
     cursor.execute(query)
@@ -85,7 +85,7 @@ def buscar_notas_lancadas(lista_notas):
       AND TITULO IN ({notas_str})
     """
 
-    conn = get_connection()
+    conn = get_connection( 'read' )
     cursor = conn.cursor()
 
     cursor.execute(query)
@@ -109,7 +109,7 @@ def buscar_revendas(lista_revendas):
       AND REVENDA IN ({revendas_str})
     """
 
-    conn = get_connection()
+    conn = get_connection( 'read' )
     cursor = conn.cursor()
 
     cursor.execute(query)
@@ -131,7 +131,7 @@ def obter_periodo():
     if dia_semana == 0:  # segunda
         inicio = hoje - timedelta(days=2)
         fim = hoje
-
+    
     elif dia_semana == 2: # quarta
         inicio = hoje - timedelta(days=2)
         fim = hoje
