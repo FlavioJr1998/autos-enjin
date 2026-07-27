@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body style="font-family: Arial, sans-serif; color: #333333; background-color: #f4f6f9; margin: 0; padding: 20px;">
+    <div style="max-width: 950px; margin: 0 auto; background-color: #ffffff; padding: 24px; border-radius: 8px; border: 1px solid #e0e0e0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+        
+        <!-- Cabeçalho -->
+        <h2 style="color: #004085; border-bottom: 2px solid #004085; padding-bottom: 8px; margin-top: 0;">
+            📦 Orçamentos e Contatos em Aberto - Setor de Peças
+        </h2>
+        <p style="font-size: 14px; color: #555555;">
+            Abaixo estão listados os contatos do balcão pendentes de retorno/fechamento:
+        </p>
+
+        <!-- Tabela Dinâmica -->
+        <table border="0" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+            <thead>
+                <tr style="background-color: #004085; color: #ffffff; font-weight: bold;">
+                    <th style="border-radius: 4px 0 0 0;">CONTATO</th>
+                    <th>CLIENTE</th>
+                    <th>DATA</th>
+                    <th style="text-align: center;">DIAS ABERTO</th>
+                    <th style="text-align: center;">QTD ITENS</th>
+                    <th>EMP / REV</th>
+                    <th>SITUAÇÃO</th>
+                    <th style="border-radius: 0 4px 0 0;">VENDEDOR</th>
+                </tr>
+            </thead>
+            <tbody>
+                {linhas_tabela}
+            </tbody>
+        </table>
+
+        <br>
+        <hr style="border: 0; border-top: 1px solid #eeeeee;">
+        
+        <!-- Rodapé da Automação -->
+        <p style="font-size: 11px; color: #888888; margin-bottom: 0;">
+            🤖 <strong>Automação de Gestão de Peças - Banco Oracle / Apollo</strong><br>
+            Notificação gerada automaticamente.
+        </p>
+    </div>
+</body>
+</html>

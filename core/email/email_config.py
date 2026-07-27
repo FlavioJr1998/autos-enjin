@@ -3,14 +3,14 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 
-def enviar_email(html):
+def enviar_email(titulo, email_destinatario, html):
     print("📤 Iniciando envio de email...")
 
     try:
         msg = MIMEMultipart()
-        msg['Subject'] = "🚨 Novas Notas Fiscais Detectadas"
+        msg['Subject'] = titulo
         msg['From'] = os.getenv("EMAIL_FROM")
-        msg['To'] = os.getenv("EMAIL_TO")
+        msg['To'] = email_destinatario
 
         msg.attach(MIMEText(html, 'html'))
 
